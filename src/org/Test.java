@@ -18,14 +18,14 @@ public class Test {
 
 		System.out.println("Now enter the city number of the start point:");
 		int start = input.nextInt();
-		System.out.println("Now enter the city number of the target point:");
-		int target = input.nextInt();
+		// System.out.println("Now enter the city number of the target point:");
+		// int target = input.nextInt();
 
 		controller.calculateAirDistances(cities);
 
-		PrimAlgorithm pa = new PrimAlgorithm(start, cities.size());
+		PrimAlgorithm pa = new PrimAlgorithm(start, cities);
 
-		List<City> MST = pa.FindPrimMST(cities);
+		List<City> MST = pa.FindPrimMST();
 		System.out.println("Minimum Spanning Tree: ");
 		for (int i = 0; i < MST.size(); i++) {
 			System.out.println("Şehir id = " + MST.get(i).getCityId() + " komşu id:"
