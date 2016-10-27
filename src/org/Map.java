@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 public class Map {
 	private int[][] map;
-	private final int size = 10;
 
 	public Map() {
-		map = new int[10][10];
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		map = new int[Application.MAP_SIZE][Application.MAP_SIZE];
+		for (int i = 0; i < Application.MAP_SIZE; i++) {
+			for (int j = 0; j < Application.MAP_SIZE; j++) {
 				map[i][j] = -1;
 			}
 		}
@@ -22,8 +21,8 @@ public class Map {
 	}
 
 	public void printMap() {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < Application.MAP_SIZE; i++) {
+			for (int j = 0; j < Application.MAP_SIZE; j++) {
 				if (map[i][j] != -1) {
 					if (map[i][j] < 10) {
 						System.out.print("C0" + map[i][j] + " ");
@@ -44,10 +43,6 @@ public class Map {
 
 	public void setMap(int[][] map) {
 		this.map = map;
-	}
-
-	public int getSize() {
-		return size;
 	}
 
 }

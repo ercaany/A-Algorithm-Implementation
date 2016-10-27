@@ -5,17 +5,17 @@ import java.util.List;
 
 public class PrimAlgorithm {
 
-	private List<City> MST = new ArrayList<City>();
-	private List<City> visited = new ArrayList<City>();
-	private List<City> cities = new ArrayList<City>();
+	private ArrayList<City> MST = new ArrayList<City>();
+	private ArrayList<City> visited = new ArrayList<City>();
+	private ArrayList<City> cities = new ArrayList<City>();
 	private int start;
 
-	public PrimAlgorithm(int start, List<City> cities) {
+	public PrimAlgorithm(int start, ArrayList<City> cities) {
 		this.start = start;
 		this.cities = cities;
 	}
 
-	public List<City> FindPrimMST() {
+	public ArrayList<City> FindPrimMST() {
 		int current = start;
 		int totalPath = 1;
 		visited.add(cities.get(current));
