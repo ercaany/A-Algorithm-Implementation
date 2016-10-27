@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Application {
 
-	public static final int MAP_SIZE = 600;
-	public static final int MAP_COLUMN = 600;
-	public static final int CITY_COUNT = 100;
+	public static final int MAP_ROW = 1000;
+	public static final int MAP_COLUMN = 650;
+	public static final int CITY_COUNT = 60;
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
@@ -28,30 +28,11 @@ public class Application {
 		PrimAlgorithm primsAlgorithm = new PrimAlgorithm(start, cities);
 		ArrayList<City> MST = primsAlgorithm.FindPrimMST();
 
-		// System.out.println("Minimum Spanning Tree: ");
-		// for (int i = 0; i < MST.size(); i++) {
-		// System.out.println("Şehir id = " + MST.get(i).getCityId() + " komşu
-		// id:"
-		// + MST.get(i).getPathList().get(0).getConnectedCity().getCityId() + "
-		// uzaklık: "
-		// + MST.get(i).getPathList().get(0).getDistance());
-		// }
-
-		controller.updateCities(MST, cities); // resetting all paths and
-												// creating new roads using MST
-		controller.generateRandomPaths(cities, 25);
+		controller.updateCities(MST, cities);
+		controller.generateRandomPaths(cities, 0);
 
 		ApplicationWindow window = new ApplicationWindow(cities);
-
 		window.paint(null);
-		// System.out.println("Road List: ");
-		// for (City city : cities) {
-		// for (Path path : city.getPathList()) {
-		// System.out.println("Road = from: " + city.getCityId() + " to: " +
-		// path.getConnectedCity().getCityId()
-		// + " distance: " + path.getDistance());
-		// }
-		// }
 
 		input.close();
 	}

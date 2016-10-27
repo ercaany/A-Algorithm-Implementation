@@ -14,8 +14,8 @@ public class Controller {
 		int x, y;
 
 		while (cities.size() < Application.CITY_COUNT) {
-			x = generator.nextInt(Application.MAP_SIZE);
-			y = generator.nextInt(Application.MAP_SIZE);
+			x = generator.nextInt(Application.MAP_ROW);
+			y = generator.nextInt(Application.MAP_COLUMN);
 
 			if (!isGenerated(cities, x, y)) {
 				cities.add(new City(cities.size(), x, y));
