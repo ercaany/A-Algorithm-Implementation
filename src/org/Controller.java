@@ -10,6 +10,7 @@ public class Controller {
 
 	}
 
+	// şehirlerin koordinatolarının random olarak oluşturan method
 	public ArrayList<City> generateCities() {
 		ArrayList<City> cities = new ArrayList<City>();
 		Random generator = new Random();
@@ -18,7 +19,7 @@ public class Controller {
 		while (cities.size() < Application.CITY_COUNT) {
 			x = generator.nextInt(Application.MAP_ROW - 10) + 10;
 			y = generator.nextInt(Application.MAP_COLUMN - 10) + 10;
-
+			// şehrin daha önce oluşturulup oluşturulmadığının kontrol edilmesi
 			if (!isGenerated(cities, x, y)) {
 				cities.add(new City(cities.size(), x, y));
 			}
@@ -26,6 +27,7 @@ public class Controller {
 		return cities;
 	}
 
+	// şehrin oluşturup oluşturmadığını kontrol eden method
 	public boolean isGenerated(ArrayList<City> cities, int x, int y) {
 		boolean generated = false;
 		for (City city : cities) {
@@ -36,6 +38,7 @@ public class Controller {
 		return generated;
 	}
 
+	// MST algoritması için tüm şehirleri bağlayan method
 	public void connectCities(ArrayList<City> cities) {
 		for (City c1 : cities) {
 			for (City c2 : cities) {
@@ -47,13 +50,15 @@ public class Controller {
 		}
 	}
 
-	// updates the cities after finding MST and adds the roads
+	// MSTnin ardından şehirlerin arasındaki yolları temizleyip MST'de bulunan
+	// yolların eklenmesi
 	public ArrayList<City> updateCities(ArrayList<City> MST, ArrayList<City> cities) {
+		// tüm yolların temizlenmesi
 		for (City c : cities) {
 			c.getPathList().clear();
 		}
 		double distance;
-
+		// MST algoritmasında bulunan yolların eklenmesi
 		for (int i = 0; i < MST.size(); i++) {
 			for (City city : cities) {
 				if (MST.get(i).getCityId() == city.getCityId()) {
@@ -65,6 +70,7 @@ public class Controller {
 				}
 			}
 		}
+		// panelde göstermek için oluşturulan liste
 		ArrayList<City> afterMST = new ArrayList<City>();
 		for (City city : cities) {
 			City c = new City(city.getCityId(), city.getX(), city.getY());
@@ -79,6 +85,7 @@ public class Controller {
 		return afterMST;
 	}
 
+	// random yolları üreten method
 	public ArrayList<City> generateRandomPaths(ArrayList<City> cities, int count) {
 		Random generator = new Random();
 		int city1, city2;
@@ -111,12 +118,14 @@ public class Controller {
 		return afterRandomPaths;
 	}
 
+	// kuş uçuşu mesafeyi hesaplayan method
 	public double airDistance(City city1, City city2) {
 		double xDiff = city1.getX() - city2.getX();
 		double yDiff = city1.getY() - city2.getY();
 		return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 	}
 
+	// g skorlarının ilklendirilmesi
 	public double[] getGScores() {
 		double[] gScores = new double[Application.CITY_COUNT];
 
@@ -126,6 +135,7 @@ public class Controller {
 		return gScores;
 	}
 
+	// h skorlarının ilklendirilmesi
 	public double[] getHScores(City target, ArrayList<City> cities) {
 		double[] hScores = new double[Application.CITY_COUNT];
 
@@ -135,11 +145,14 @@ public class Controller {
 		return hScores;
 	}
 
+	// gerçek yolu hesaplayan method
 	public double realDistance(double airDistance) {
+		// her yolun gerçek uzaklığı %30 olarak arttırılmıştır
 		double percent = 30.0;
 		return (((airDistance * percent) / 100.0) + airDistance);
 	}
 
+	// pencereden input okuyan method
 	public int readInputFromDialog(String message) {
 		int input = -1;
 		boolean ready = false;

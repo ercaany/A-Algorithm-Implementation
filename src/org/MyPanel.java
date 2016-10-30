@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel implements KeyListener {
+
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<City> cities;

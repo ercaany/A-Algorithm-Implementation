@@ -4,7 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AStarAlgorithm {
-
+	/*
+	 * @param discovered: kuyruk olarak kullanılan liste. bulunan şehirler bu
+	 * diziye eklenir
+	 * 
+	 * @param visited: değerlendirilen şehirleri bulunduran liste. buradaki
+	 * şehirlere bir daha bakılmıyor
+	 * 
+	 * @param cities: tüm şehirlerin bulunduğu liste
+	 * 
+	 * @param gScoresFromRoot: şehirlerin G skorları tutan dizi
+	 * 
+	 * @param hScoresToTarget: şehirlerin H skorları tutan dizi
+	 * 
+	 * @param fScores: şehirlerin f skorlarını tutan dizi
+	 * 
+	 * @param cameFrom: şehirlerin nereden geldiğini tutan hash map
+	 * 
+	 * @param maxQueueSize: kuyruğun ulaştığı maksimum boyut
+	 * 
+	 * @param totalPopFromQueue: kuyruktan yapılan toplam
+	 */
 	private ArrayList<City> discovered = new ArrayList<City>();
 	private ArrayList<City> visited = new ArrayList<City>();
 	private ArrayList<City> cities;
@@ -28,34 +48,47 @@ public class AStarAlgorithm {
 	}
 
 	public ArrayList<City> findMinPath(City start, City target) {
+		// başlangıç şehrinin kuyruğa eklenmesi
 		discovered.add(start);
+		// başlangıç şehrinin g skorunu hesaplama
 		gScoresFromRoot[start.getCityId()] = 0;
+		// başlangıç şehrinin f skorunu hesaplama
 		fScores[start.getCityId()] = hScoresToTarget[start.getCityId()];
 
 		City current;
+		// kuyruk boş değilken dön
 		while (!discovered.isEmpty()) {
+			// current değişkenine min f skorlu şehri atıyoruz
 			current = findMinFScore();
-
+			// eğer bu şehir hedef şehir ise, döngüyü bitir.
 			if (current.getCityId() == target.getCityId()) {
 				discovered.remove(current);
 				break;
 			} else {
-
+				// şehri kuyruktan sil
 				discovered.remove(current);
+				// şehri değerlendirildi listesine ekle
 				visited.add(current);
-
+				// bu şehrin tüm komşuları için
 				for (Path path : current.getPathList()) {
+					// eğer bu şehir değerlendirilmediyse
 					if (visited.contains(path.getConnectedCity())) {
 					} else {
 						double tempGScore = gScoresFromRoot[current.getCityId()] + path.getDistance();
+						// eğer bu şehir kuyrukta değilse
 						if (!(discovered.contains(path.getConnectedCity()))) {
+							// kuyruğa ekle
 							discovered.add(path.getConnectedCity());
+							// maximum kuyruk boyutu denetle ve hesapla
 							if (discovered.size() > maxQueueSize) {
 								maxQueueSize = discovered.size();
 							}
 						}
+						// komşunun geldiği yere şuanki şehri ata
 						cameFrom.put(path.getConnectedCity(), current);
+						// g skorunu hesapla ve ata
 						gScoresFromRoot[path.getConnectedCity().getCityId()] = tempGScore;
+						// f skorunu hesapla ve ata
 						fScores[path.getConnectedCity()
 								.getCityId()] = gScoresFromRoot[path.getConnectedCity().getCityId()]
 										+ hScoresToTarget[path.getConnectedCity().getCityId()];
@@ -63,6 +96,7 @@ public class AStarAlgorithm {
 				}
 			}
 		}
+		// döngü bittikten sonra oluşan min pathi döndür
 		ArrayList<City> minPath = new ArrayList<City>();
 		City current1 = target;
 		minPath.add(current1);
@@ -73,6 +107,7 @@ public class AStarAlgorithm {
 		return minPath;
 	}
 
+	// en düşük f skora sahip olan şehri döndüren method
 	public City findMinFScore() {
 		double minFScore = 9999.0;
 		int minCityID = 0;

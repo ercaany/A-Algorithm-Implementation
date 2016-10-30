@@ -4,7 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class City {
-
+	/*
+	 * @param pathList: bu şehrin bağlı olduğu şehir ve uzaklığını bulunduran
+	 * path listesi
+	 * 
+	 * @param cityId: şehrin id'si
+	 * 
+	 * @param x: şehrin x koordinatı
+	 * 
+	 * @param y: şehrin y koordinatı
+	 * 
+	 */
 	private List<Path> pathList;
 	private int cityId;
 	private int x;

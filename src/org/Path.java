@@ -1,7 +1,12 @@
 package org;
 
 public class Path {
-
+	/*
+	 * @param connectedCity: bu path'e sahip olan şehrin komşusu
+	 * 
+	 * @param distance: bu iki şehir arasındaki mesafe:
+	 * 
+	 */
 	private City connectedCity;
 	private double distance;
 
