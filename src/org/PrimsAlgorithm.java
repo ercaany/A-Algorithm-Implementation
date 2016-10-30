@@ -3,14 +3,14 @@ package org;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrimAlgorithm {
+public class PrimsAlgorithm {
 
 	private ArrayList<City> MST = new ArrayList<City>();
 	private ArrayList<City> visited = new ArrayList<City>();
 	private ArrayList<City> cities = new ArrayList<City>();
 	private int start;
 
-	public PrimAlgorithm(int start, ArrayList<City> cities) {
+	public PrimsAlgorithm(int start, ArrayList<City> cities) {
 		this.start = start;
 		this.cities = cities;
 	}

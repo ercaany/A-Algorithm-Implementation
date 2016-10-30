@@ -11,7 +11,6 @@ public class ApplicationWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private int start;
 	private int target;
-
 	private ArrayList<City> cities;
 
 	public ApplicationWindow(ArrayList<City> cities, int start, int target) {
@@ -48,8 +47,6 @@ public class ApplicationWindow extends JFrame {
 						(city.getX() + path.getConnectedCity().getX()) / 2,
 						(city.getY() + path.getConnectedCity().getY()) / 2);
 			}
-
 		}
 	}
-
 }

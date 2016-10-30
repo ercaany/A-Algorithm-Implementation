@@ -3,6 +3,8 @@ package org;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class Controller {
 	public Controller() {
 
@@ -14,8 +16,8 @@ public class Controller {
 		int x, y;
 
 		while (cities.size() < Application.CITY_COUNT) {
-			x = generator.nextInt(Application.MAP_ROW);
-			y = generator.nextInt(Application.MAP_COLUMN);
+			x = generator.nextInt(Application.MAP_ROW - 10) + 10;
+			y = generator.nextInt(Application.MAP_COLUMN - 10) + 10;
 
 			if (!isGenerated(cities, x, y)) {
 				cities.add(new City(cities.size(), x, y));
@@ -27,7 +29,7 @@ public class Controller {
 	public boolean isGenerated(ArrayList<City> cities, int x, int y) {
 		boolean generated = false;
 		for (City city : cities) {
-			if (x - 40 <= city.getX() && city.getX() <= x + 40 && y - 40 <= city.getY() && city.getY() <= y + 40) {
+			if (x - 50 <= city.getX() && city.getX() <= x + 50 && y - 50 <= city.getY() && city.getY() <= y + 50) {
 				generated = true;
 			}
 		}
@@ -46,7 +48,7 @@ public class Controller {
 	}
 
 	// updates the cities after finding MST and adds the roads
-	public void updateCities(ArrayList<City> MST, ArrayList<City> cities) {
+	public ArrayList<City> updateCities(ArrayList<City> MST, ArrayList<City> cities) {
 		for (City c : cities) {
 			c.getPathList().clear();
 		}
@@ -63,9 +65,21 @@ public class Controller {
 				}
 			}
 		}
+		ArrayList<City> afterMST = new ArrayList<City>();
+		for (City city : cities) {
+			City c = new City(city.getCityId(), city.getX(), city.getY());
+			ArrayList<Path> pathList = new ArrayList<Path>();
+			for (Path path : city.getPathList()) {
+				pathList.add(path);
+			}
+			c.setPathList(pathList);
+			afterMST.add(c);
+		}
+
+		return afterMST;
 	}
 
-	public void generateRandomPaths(ArrayList<City> cities, int count) {
+	public ArrayList<City> generateRandomPaths(ArrayList<City> cities, int count) {
 		Random generator = new Random();
 		int city1, city2;
 		int pathCount = 0;
@@ -84,6 +98,17 @@ public class Controller {
 				pathCount++;
 			}
 		}
+		ArrayList<City> afterRandomPaths = new ArrayList<City>();
+		for (City city : cities) {
+			City c = new City(city.getCityId(), city.getX(), city.getY());
+			ArrayList<Path> pathList = new ArrayList<Path>();
+			for (Path path : city.getPathList()) {
+				pathList.add(path);
+			}
+			c.setPathList(pathList);
+			afterRandomPaths.add(c);
+		}
+		return afterRandomPaths;
 	}
 
 	public double airDistance(City city1, City city2) {
@@ -111,8 +136,27 @@ public class Controller {
 	}
 
 	public double realDistance(double airDistance) {
-		Random generator = new Random();
 		double percent = 30.0;
 		return (((airDistance * percent) / 100.0) + airDistance);
 	}
+
+	public int readInputFromDialog(String message) {
+		int input = -1;
+		boolean ready = false;
+		while (!ready) {
+			try {
+				String stringInput = JOptionPane.showInputDialog(message);
+				input = Integer.parseInt(stringInput);
+				if (input >= 0 && input < Application.CITY_COUNT) {
+					ready = true;
+				} else {
+					ready = false;
+				}
+			} catch (Exception e) {
+				ready = false;
+			}
+		}
+		return input;
+	}
+
 }
